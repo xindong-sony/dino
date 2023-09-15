@@ -9,4 +9,5 @@ python -m torch.distributed.launch --nproc_per_node=4 \
            --nnodes=2 --node_rank=$NODE_RANK --master_addr="10.4.19.86" \
            --master_port=1234 main_dino.py --arch vit_small \
            --data_path /home/ubuntu/imagenet_dataset/imagenet/train \
-           --output_dir /home/ubuntu/
+           --output_dir /home/ubuntu/ \
+           --dist_url tcp://10.4.19.86:1234
