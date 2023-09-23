@@ -488,7 +488,7 @@ def init_distributed_mode(args):
 
     print(f"world size {args.world_size}, rank {args.rank}, init_method: {args.dist_url}")
     dist.init_process_group(
-        backend="nccl",
+        backend="gloo",
         init_method=args.dist_url,
         world_size=args.world_size,
         rank=args.rank,
