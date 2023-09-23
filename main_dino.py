@@ -33,6 +33,7 @@ from torchvision import models as torchvision_models
 import utils
 import vision_transformer as vits
 from vision_transformer import DINOHead
+import wandb
 
 torchvision_archs = sorted(name for name in torchvision_models.__dict__
     if name.islower() and not name.startswith("__")
@@ -293,6 +294,7 @@ def train_dino(args):
         if utils.is_main_process():
             with (Path(args.output_dir) / "log.txt").open("a") as f:
                 f.write(json.dumps(log_stats) + "\n")
+            wandb.log(log_stats)
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
     print('Training time {}'.format(total_time_str))
@@ -467,5 +469,9 @@ class DataAugmentationDINO(object):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('DINO', parents=[get_args_parser()])
     args = parser.parse_args()
+    wandb.init(
+      project=args.output_dir, 
+      config=args)
+    
     Path(args.output_dir).mkdir(parents=True, exist_ok=True)
     train_dino(args)
