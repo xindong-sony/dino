@@ -467,7 +467,6 @@ def setup_for_distributed(is_master):
 def init_distributed_mode(args):
     # launched with torch.distributed.launch
     if 'RANK' in os.environ and 'WORLD_SIZE' in os.environ:
-        print("haha")
         args.rank = int(os.environ["RANK"])
         args.world_size = int(os.environ['WORLD_SIZE'])
         args.gpu = int(os.environ['LOCAL_RANK'])
@@ -486,9 +485,9 @@ def init_distributed_mode(args):
         print('Does not support training without GPU.')
         sys.exit(1)
 
-    print(f"world size {args.world_size}, rank {args.rank}, init_method: {args.dist_url}")
+    print(f"world size {args.world_size}, rank {args.rank}, init_method: {args.dist_url}, gpu: {args.gpu}")
     dist.init_process_group(
-        backend="gloo",
+        backend="nccl",
         init_method=args.dist_url,
         world_size=args.world_size,
         rank=args.rank,

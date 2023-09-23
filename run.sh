@@ -1,6 +1,6 @@
 NODE_RANK=$1
 export NCCL_SOCKET_IFNAME=ens3
-export NCCL_DEBUG=INFO
+export NCCL_DEBUG=ALL
 
 echo $NODE_RANK
 
