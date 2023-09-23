@@ -486,7 +486,7 @@ def init_distributed_mode(args):
         print('Does not support training without GPU.')
         sys.exit(1)
 
-    print(f"world size {args.world_size}, rank {args.rank}")
+    print(f"world size {args.world_size}, rank {args.rank}, init_method: {args.dist_url}")
     dist.init_process_group(
         backend="nccl",
         init_method=args.dist_url,
