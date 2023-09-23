@@ -137,6 +137,12 @@ def train_dino(args):
     print("\n".join("%s: %s" % (k, str(v)) for k, v in sorted(dict(vars(args)).items())))
     cudnn.benchmark = True
 
+
+    if utils.is_main_process():
+        wandb.init(
+        project=args.output_dir.split("/")[-1], 
+        config=args)
+
     # ============ preparing data ... ============
     transform = DataAugmentationDINO(
         args.global_crops_scale,
@@ -469,11 +475,6 @@ class DataAugmentationDINO(object):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('DINO', parents=[get_args_parser()])
     args = parser.parse_args()
-
-    if utils.is_main_process():
-        wandb.init(
-        project=args.output_dir.split("/")[-1], 
-        config=args)
     
     Path(args.output_dir).mkdir(parents=True, exist_ok=True)
     train_dino(args)
