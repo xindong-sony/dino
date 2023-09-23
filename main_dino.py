@@ -470,7 +470,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser('DINO', parents=[get_args_parser()])
     args = parser.parse_args()
     wandb.init(
-      project=args.output_dir, 
+      project=args.output_dir.split("/")[-1], 
       config=args)
     
     Path(args.output_dir).mkdir(parents=True, exist_ok=True)
