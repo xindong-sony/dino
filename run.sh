@@ -9,11 +9,11 @@ echo $NODE_RANK
 
 python -m torch.distributed.launch --nproc_per_node=4 \
            --nnodes=2 --node_rank=$NODE_RANK --master_addr="10.4.27.83" \
-           --master_port=12345 main_dino.py --arch swin_s \
+           --master_port=40000 main_dino.py --arch swin_s \
            --data_path /home/ubuntu/firstbatch_syn/ \
            --num_workers 6 \
            --output_dir /home/ubuntu/dino/on_firstbatch_syn \
-           --dist_url tcp://10.4.27.83:12345
+           --dist_url tcp://10.4.27.83:40000
 
 
 # python -m torch.distributed.launch --nproc_per_node=4 \
